@@ -4,18 +4,27 @@ import Config from '../../config/Config';
 import UserSchema from '../../models/schema/UserSchema';
 
 class GoogleStrategy {
-  static init() {
+  public static init() {
     passport.use(
       new Strategy(
         Config.oauth.google,
-        async (req, accessToken, refreshToken, profile, done) => {
+        async (_req, accessToken, refreshToken, profile, done) => {
           const profileJson = profile._json;
-          const user = await UserSchema.findOne({ google: profile.id });
+          const user = await UserSchema.findOne({
+            google: {
+              id: profile.id,
+            },
+          });
 
           if (user) {
             user.update({
-              name: profileJson.given_name,
-              profileImg: profileJson.picture,
+              name: profile.displayName,
+              profileImg: profile?.photos?.at(0)?.value,
+              google: {
+                id: profile.id,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+              },
             });
 
             return done(user.errors, user);
@@ -24,10 +33,12 @@ class GoogleStrategy {
           const newUser = await UserSchema.create({
             name: profileJson.given_name,
             email: profileJson.email,
-            google: profile.id,
             profileImg: profileJson.picture,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
+            google: {
+              id: profile.id,
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+            },
           });
 
           return done(newUser.errors, newUser);

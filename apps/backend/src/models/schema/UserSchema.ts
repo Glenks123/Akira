@@ -1,5 +1,16 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 
+interface GoogleAuth {
+  id: string;
+  accessToken: string;
+  refreshToken: string;
+}
+interface TwitterAuth {
+  id: string;
+  accessToken: string;
+  accessSecret: string;
+}
+
 class User {
   @prop()
   public name?: string;
@@ -8,16 +19,13 @@ class User {
   public email?: string;
 
   @prop()
-  public google?: string;
+  public google?: GoogleAuth;
+
+  @prop()
+  public twitter?: TwitterAuth;
 
   @prop()
   public profileImg?: string;
-
-  @prop()
-  public accessToken?: string;
-
-  @prop()
-  public refreshToken?: string;
 }
 
 export default getModelForClass(User);
