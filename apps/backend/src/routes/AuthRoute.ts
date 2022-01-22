@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import AuthController from '../controllers/AuthController';
+import AuthController from '../middleware/controllers/AuthController';
 import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const router = express.Router();
@@ -21,6 +21,19 @@ router.get(
     failureRedirect: '/auth/failure',
   })
 );
+
+/**
+ * * Twitter auth wont be used yet due to twitter's application pending request
+ */
+
+// router.get('/auth/twitter', passport.authenticate('twitter'));
+// router.get(
+//   '/auth/twitter/callback',
+//   passport.authenticate('twitter', {
+//     successRedirect: '/auth/success',
+//     failureRedirect: '/auth/failure',
+//   })
+// );
 
 // Exception
 router.get('/failure', AuthController.authFailure);

@@ -1,6 +1,6 @@
 import passport from 'passport';
 import UserSchema from '../models/schema/UserSchema';
-import GoogleStrategy from '../auth/strategies/google';
+import GoogleStrategy from '../utils/strategies/Google';
 
 class Passport {
   public init(): void {
@@ -13,7 +13,7 @@ class Passport {
         .then((user) => {
           done(null, user);
         })
-        .catch((e: Error) => {
+        .catch(() => {
           done(new Error('Failed to deserialize an user'));
         });
     });

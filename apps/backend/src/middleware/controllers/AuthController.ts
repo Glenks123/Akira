@@ -1,15 +1,15 @@
 import { Response, Request } from 'express';
-import '../service/Passport';
+import '../../service/Passport';
 
 export default class AuthController {
-  static authFailure(_req: Request, res: Response) {
+  public static authFailure(_req: Request, res: Response) {
     res.status(401).json({
       success: false,
       message: 'User has failed to authenticate',
     });
   }
 
-  static authSuccess(req: Request, res: Response) {
+  public static authSuccess(req: Request, res: Response) {
     res.status(200).json({
       success: true,
       message: 'User has authenticated successfully',
@@ -18,7 +18,7 @@ export default class AuthController {
     });
   }
 
-  static logout(req: Request, res: Response) {
+  public static logout(req: Request, res: Response) {
     req.logout();
 
     req.session.destroy((err: Error) => {
@@ -36,7 +36,7 @@ export default class AuthController {
     });
   }
 
-  static status(req: Request, res: Response) {
+  public static status(req: Request, res: Response) {
     res.status(200).json({
       authenticated: true,
       message: 'User is currently logged in the session',
