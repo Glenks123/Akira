@@ -28,7 +28,7 @@ const Config: IConfig = {
     port: 3000,
   },
   cors: {
-    origin: process.env.CORS_ORIGIN,
+    origin: 'http://localhost:4200',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   },
