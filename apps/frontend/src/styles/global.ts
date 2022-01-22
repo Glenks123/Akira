@@ -6,6 +6,8 @@ export const GlobalStyle = createGlobalStyle`
     --light-gray: #F0F0F0;
     --dark-gray: #A4A4A4;
     --black: #000;
+    --green: #4fff4d;
+    --red: #ff5252;
   }
 
   * {
@@ -40,12 +42,10 @@ export const GlobalStyle = createGlobalStyle`
 
   button {
     cursor: pointer;
-    color: #fff;
-    background-color: #000;
+    outline: 'none';
   }
 
   [disabled] {
-    opacity: 0.6;
     cursor: not-allowed;
   }
 `
