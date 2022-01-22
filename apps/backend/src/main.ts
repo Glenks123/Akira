@@ -1,22 +1,53 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import express from 'express';
+import passport from 'passport';
+import expressSession from 'express-session';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import MongoStore from 'connect-mongo';
+import Config from './config/Config';
+import Mongo from './service/Mongo';
+import Passport from './service/Passport';
+import AuthRoute from './routes/AuthRoute';
 
-import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+async function main() {
+  const app = express();
+  const { server: serverSetting, cors: corsSetting } = Config;
 
-import { AppModule } from './app/app.module';
+  // Database Setup
+  Mongo.init();
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3333;
-  await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+  // Strategy Setup
+  Passport.init();
+
+  app.use(cors(corsSetting));
+  app.use(express.json());
+  app.use(cookieParser());
+
+  // Express session
+  app.use(
+    expressSession({
+      resave: false,
+      saveUninitialized: true,
+      secret: serverSetting.sessionSecret,
+      store: MongoStore.create({
+        mongoUrl: Config.mongodb.uri,
+      }),
+    })
   );
+
+  // Passport session
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Routes
+  app.use('/auth', AuthRoute);
+
+  // Server Listener
+  const server = app.listen(serverSetting.port, () => {
+    console.log(`Listening at http://localhost:${serverSetting.port}`);
+  });
+
+  server.on('error', console.error);
 }
 
-bootstrap();
+main();
