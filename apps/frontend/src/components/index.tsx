@@ -1,6 +1,7 @@
-import { Navbar } from "./Navbar";
-import { PomodoroClock } from "./PomodoroClock";
-import styled from "styled-components";
+import { Navbar } from './Navbar';
+import { PomodoroClock } from './PomodoroClock';
+import { LoginPage } from './LoginPage';
+import styled from 'styled-components';
 
 const Grid = styled.div`
   display: flex;
@@ -11,14 +12,15 @@ const Grid = styled.div`
 
 export function HomePage() {
   return (
-    <div>
-      <Navbar />
-      <Grid>
-        <PomodoroClock />
-        <div>
-          <h1>todos</h1>
-        </div>
-      </Grid>
-    </div>
-  )
+    <LoginPage />
+    // <div>
+    //   <Navbar />
+    //   <Grid>
+    //     <PomodoroClock />
+    //     <div>
+    //       <h1>todos</h1>
+    //     </div>
+    //   </Grid>
+    // </div>
+  );
 }

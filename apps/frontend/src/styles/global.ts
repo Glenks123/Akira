@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -10,11 +10,11 @@ export const GlobalStyle = createGlobalStyle`
     --red: #ff5252;
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  // * {
+  //   margin: 0;
+  //   padding: 0;
+  //   box-sizing: border-box;
+  // }
 
   html {
     @media (max-width: 1080px) {
@@ -48,4 +48,4 @@ export const GlobalStyle = createGlobalStyle`
   [disabled] {
     cursor: not-allowed;
   }
-`
+`;
